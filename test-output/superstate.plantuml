@@ -6,15 +6,15 @@ state "on" as on  {
     state "quiet" as quiet  {
         state "quiet b" as quiet_b  {
         }
-        state "quiet a" as quiet_a  {
+        state "quiet a" as quiet_a #LightGreen {
         }
     }
 }
-state "off" as off #LightGreen {
+state "off" as off  {
 }
 loud --> quiet : volume_down
 quiet --> loud : volume_up
-on --> off LightGreen : switched_off
+on --> off : switched_off
 off --> on : switched_on
  
 @enduml

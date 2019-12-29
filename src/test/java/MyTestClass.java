@@ -28,7 +28,10 @@ public class MyTestClass {
 
         StateMachine sm = new StateMachine(off, on);
         sm.init();
-        String uml = new PlantUmlBuilder(sm).generateUml();
+        sm.handleEvent("switched_on");
+        String uml = new PlantUmlBuilder(sm)
+                .highlightActiveState()
+                .build();
 
         writeToFile(uml, "test-output"+ File.separator+"superstate.plantuml");
     }

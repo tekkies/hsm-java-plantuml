@@ -13,6 +13,7 @@ public class PlantUmlBuilder {
     StringBuilder stringBuilder;
     StringBuilder transitions;
     private StateMachine stateMachine;
+    private boolean highlightActiveState =false;
 
     public PlantUmlBuilder(StateMachine stateMachine) {
 
@@ -21,7 +22,7 @@ public class PlantUmlBuilder {
         transitions = new StringBuilder();
     }
 
-    public String generateUml() {
+    public String build() {
         appendLine("@startuml");
         appendLine("scale 600 width");
 
@@ -46,16 +47,11 @@ public class PlantUmlBuilder {
     }
 
     private void declareState(State state, String indent) {
-        String color="";
-        if(stateMachine.getAllActiveStates().contains(state))
-        {
-            color = "#LightGreen";
-        }
         appendLine("%sstate \"%s\" as %s %s {",
                 indent,
                 state.getId(),
                 safeName(state.getId()),
-                color);
+                getColor(state));
         ArrayList<State> descendantStates = (ArrayList<State>) state.getDescendantStates();
         if(descendantStates != null) {
             for (State substate : descendantStates) {
@@ -65,6 +61,20 @@ public class PlantUmlBuilder {
         }
         declareTransitions(state);
         appendLine("%s}", indent);
+    }
+
+    private String getColor(State state) {
+        String color="";
+        if(highlightActiveState && isActiveState(state))
+        {
+            color = "#LightGreen";
+        }
+        return color;
+    }
+
+    private boolean isActiveState(State state) {
+        List<State> allActiveStates = stateMachine.getAllActiveStates();
+        return allActiveStates.indexOf(state) == (allActiveStates.size() - 1);
     }
 
     private void declareTransitions(State state) {
@@ -97,5 +107,10 @@ public class PlantUmlBuilder {
     private void appendLine(String format, Object... args) {
         stringBuilder.append(String.format(format, args));
         stringBuilder.append(System.lineSeparator());
+    }
+
+    public PlantUmlBuilder highlightActiveState() {
+        this.highlightActiveState = true;
+        return this;
     }
 }
