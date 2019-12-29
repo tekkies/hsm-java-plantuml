@@ -1,39 +1,27 @@
-
 import de.artcom.hsm.*;
-import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.InOrder;
 import uk.co.tekkies.hsm.plantuml.PlantUmlBuilder;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
 
 public class MyTestClass {
 
     @Test
     public void canGenerateHierarcicalUml() {
         //given:
-        Action onEnterLoud = mock(Action.class);
-        Action onEnterQuiet = mock(Action.class);
-        Action onEnterOn = mock(Action.class);
-        Action onEnterOff = mock(Action.class);
-        State loud = new State("loud")
-                .onEnter(onEnterLoud);
-        State quiet = new Sub("quiet", new State("quiet a"), new State("quiet b"))
-                .onEnter(onEnterQuiet);
+        State loud = new State("loud");
+        State quiet = new Sub("quiet", new State("quiet a"), new State("quiet b"));
 
         quiet.addHandler("volume_up", loud, TransitionKind.External);
         loud.addHandler("volume_down", quiet, TransitionKind.External);
 
-        Sub on = new Sub("on", new StateMachine(quiet, loud))
-                .onEnter(onEnterOn);
+        Sub on = new Sub("on", new StateMachine(quiet, loud));
 
-        State off = new State("off")
-                .onEnter(onEnterOff);
+        State off = new State("off");
 
         on.addHandler("switched_off", off, TransitionKind.External);
         off.addHandler("switched_on", on, TransitionKind.External);
@@ -42,7 +30,7 @@ public class MyTestClass {
         sm.init();
         String uml = new PlantUmlBuilder(sm).generateUml();
 
-        writeToFile(uml, "superstate.plantuml");
+        writeToFile(uml, "test-output"+ File.separator+"superstate.plantuml");
     }
 
     private void writeToFile(String uml, String fileName) {
