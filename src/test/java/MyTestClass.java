@@ -2,25 +2,19 @@
 import de.artcom.hsm.*;
 import org.junit.Assert;
 import org.junit.Test;
-//import org.mockito.InOrder;
+import org.mockito.InOrder;
+import uk.co.tekkies.hsm.plantuml.PlantUmlBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-//import static org.mockito.Mockito.inOrder;
-//import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
 
 public class MyTestClass {
 
     @Test
-    public void test1() {
-        new PlantUmlGenerator().generate();
-        new String("sdfsdfsf");
-    }
-/*
-
-        @Test
     public void canGenerateHierarcicalUml() {
         //given:
         Action onEnterLoud = mock(Action.class);
@@ -46,10 +40,9 @@ public class MyTestClass {
 
         StateMachine sm = new StateMachine(off, on);
         sm.init();
-        String uml = new UmlBuilder(sm).generateUml();
+        String uml = new PlantUmlBuilder(sm).generateUml();
 
         writeToFile(uml, "superstate.plantuml");
-
     }
 
     private void writeToFile(String uml, String fileName) {
@@ -63,5 +56,5 @@ public class MyTestClass {
         }
         writer.println(uml);
         writer.close();
-    } */
+    }
 }
