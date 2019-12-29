@@ -1,0 +1,3 @@
+[submodule "hsm-java"]
+	path = hsm-java
+	url = https://github.com/tekkies/hsm-java
