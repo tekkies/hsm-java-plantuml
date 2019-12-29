@@ -46,7 +46,16 @@ public class PlantUmlBuilder {
     }
 
     private void declareState(State state, String indent) {
-        appendLine("%sstate \"%s\" as %s {", indent, state.getId(), safeName(state.getId()));
+        String color="";
+        if(stateMachine.getAllActiveStates().contains(state))
+        {
+            color = "#LightGreen";
+        }
+        appendLine("%sstate \"%s\" as %s %s {",
+                indent,
+                state.getId(),
+                safeName(state.getId()),
+                color);
         ArrayList<State> descendantStates = (ArrayList<State>) state.getDescendantStates();
         if(descendantStates != null) {
             for (State substate : descendantStates) {

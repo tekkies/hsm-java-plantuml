@@ -1,20 +1,20 @@
 @startuml
 scale 600 width
-state "on" as on {
-    state "loud" as loud {
+state "on" as on  {
+    state "loud" as loud  {
     }
-    state "quiet" as quiet {
-        state "quiet b" as quiet_b {
+    state "quiet" as quiet  {
+        state "quiet b" as quiet_b  {
         }
-        state "quiet a" as quiet_a {
+        state "quiet a" as quiet_a  {
         }
     }
 }
-state "off" as off {
+state "off" as off #LightGreen {
 }
 loud --> quiet : volume_down
 quiet --> loud : volume_up
-on --> off : switched_off
+on --> off LightGreen : switched_off
 off --> on : switched_on
  
 @enduml
