@@ -1,2 +1,4 @@
 rootProject.name = 'hsm-java-plantuml'
 
+include ':hsm-java:hsm'
+
