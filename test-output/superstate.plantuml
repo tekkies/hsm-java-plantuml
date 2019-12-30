@@ -13,8 +13,10 @@ state "b" as b  {
 state "a" as a  {
 }
 b.b --> b.a : b.b_to_b.a
+b.a.a --> a : b.a.a_to_a
 b.a --> b.b : b.a_to_b.b
 b --> a : b_to_a
+a --> b : a_to_b
 a --> b : a_to_b
  
 @enduml

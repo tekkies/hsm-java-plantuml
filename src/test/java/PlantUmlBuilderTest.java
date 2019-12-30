@@ -17,7 +17,9 @@ public class PlantUmlBuilderTest {
     public void canGenerateHierarcicalUml() {
         //given:
         State bb = new State("b.b");
-        State ba = new Sub("b.a", new State("b.a.a"), new State("b.a.b"));
+        State bab = new State("b.a.b");
+        State baa = new State("b.a.a");
+        State ba = new Sub("b.a", baa, bab);
 
         ba.addHandler("b.a to b.b", bb, TransitionKind.External);
         bb.addHandler("b.b to b.a", ba, TransitionKind.External);
@@ -28,6 +30,8 @@ public class PlantUmlBuilderTest {
 
         b.addHandler("b to a", a, TransitionKind.External);
         a.addHandler("a to b", b, TransitionKind.External);
+        a.addHandler("a to b.a.b", bab, TransitionKind.External);
+        baa.addHandler("b.a.a to a", a, TransitionKind.External);
 
         StateMachine sm = new StateMachine(a, b);
         sm.init();
