@@ -24,7 +24,6 @@ public class PlantUmlBuilder {
 
     public String build() {
         appendLine("@startuml");
-        appendLine("scale 600 width");
 
         List<State> descendantStates = stateMachine.getDescendantStates();
         for (State state : descendantStates) {

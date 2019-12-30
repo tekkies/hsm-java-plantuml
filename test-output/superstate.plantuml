@@ -1,5 +1,4 @@
 @startuml
-scale 600 width
 state "b" as b  {
     state "b.b" as b.b  {
     }

@@ -43,7 +43,18 @@ public class PlantUmlBuilderTest {
         writeToFile(uml, "superstate.plantuml");
     }
 
-    private void writeToFile(String uml, String fileName) {
+    @Test
+    public void simpleExample() {
+        State broken = new State("Broken");
+        State fixed = new State("Fixed");
+        broken.addHandler("Fix", fixed, TransitionKind.External);
+        StateMachine stateMachine = new StateMachine(broken, fixed);
+        stateMachine.init();
+        String plantUml = new PlantUmlBuilder(stateMachine)
+                .highlightActiveState()
+                .build();
+    }
+        private void writeToFile(String uml, String fileName) {
         fileName = Paths.get("test-output", fileName).toString();
         PrintWriter writer = null;
         try {
