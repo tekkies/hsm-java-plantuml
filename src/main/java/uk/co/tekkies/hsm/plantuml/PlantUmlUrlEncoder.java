@@ -10,7 +10,7 @@ public class PlantUmlUrlEncoder {
         byte[] array = plantUml.getBytes(StandardCharsets.UTF_8);
         byte[] deflatedUtf8PlantUml = deflate(array);
         String base64deflatedUtf8PlantUml  = new PlantUmlEncode64().encode64(deflatedUtf8PlantUml);
-        String url = "http://www.plantuml.com/plantuml/png/"+base64deflatedUtf8PlantUml;
+        String url = "https://www.plantuml.com/plantuml/png/"+base64deflatedUtf8PlantUml;
         return url;
     }
 
