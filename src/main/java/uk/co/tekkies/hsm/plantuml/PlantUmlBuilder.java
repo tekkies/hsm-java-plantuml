@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class PlantUmlBuilder {
     StringBuilder stringBuilder;
-    StringBuilder transitions;
+    ArrayList<String> transitions;
     private StateMachine stateMachine;
     private boolean highlightActiveState =false;
 
@@ -19,7 +19,7 @@ public class PlantUmlBuilder {
 
         this.stateMachine = stateMachine;
         stringBuilder = new StringBuilder();
-        transitions = new StringBuilder();
+        transitions = new ArrayList<String>();
     }
 
     public String build() {
@@ -33,11 +33,17 @@ public class PlantUmlBuilder {
             }
         }
 
-        stringBuilder.append(transitions);
+        appendTransitions();
 
         stringBuilder.append(" \n" +
                 "@enduml");
         return stringBuilder.toString();
+    }
+
+    private void appendTransitions() {
+        for (String transtion:transitions) {
+            stringBuilder.append(transtion);
+        }
     }
 
     private boolean isTopLevelState(State state) {
@@ -89,11 +95,15 @@ public class PlantUmlBuilder {
     }
 
     private void addTransition(State state, State targetState, String handler) {
-        transitions.append(String.format("%s --> %s : %s",
+        String transition = String.format("%s --> %s : %s%s",
                 safeName(state.getId()),
                 safeName(targetState.getId()),
-                safeName(handler)));
-        transitions.append(System.lineSeparator());
+                safeName(handler),
+                System.lineSeparator());
+        if(!transitions.contains(transition))
+        {
+            transitions.add(transition);
+        }
     }
 
     private boolean isImmediateDecenent(State parent, State state) {
