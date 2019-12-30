@@ -87,9 +87,10 @@ public class PlantUmlBuilder {
         LinkedListMultimap<String, Handler> eventHandlers = state.getEventHandlers();
         List<Map.Entry<String, Handler>> entries = eventHandlers.entries();
         for (Map.Entry<String, Handler> entry:entries) {
-            Handler transition = entries.get(0).getValue();
-            State targetState = transition.getTargetState();
-            addTransition(state, targetState, entries.get(0).getKey());
+            Handler handler = entry.getValue();
+            State targetState = handler.getTargetState();
+            String handlerName = entry.getKey();
+            addTransition(state, targetState, handlerName);
         }
 
     }
