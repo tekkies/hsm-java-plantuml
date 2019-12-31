@@ -14,6 +14,7 @@ public class PlantUmlBuilder {
     ArrayList<String> transitions;
     private StateMachine stateMachine;
     private boolean highlightActiveState =false;
+    private State highlightState;
 
     public PlantUmlBuilder(StateMachine stateMachine) {
 
@@ -70,7 +71,7 @@ public class PlantUmlBuilder {
 
     private String getColor(State state) {
         String color="";
-        if(highlightActiveState && isActiveState(state))
+        if((highlightActiveState && isActiveState(state)) || state == highlightState)
         {
             color = "#LightGreen";
         }
@@ -122,5 +123,21 @@ public class PlantUmlBuilder {
     public PlantUmlBuilder highlightActiveState() {
         this.highlightActiveState = true;
         return this;
+    }
+
+
+    private PlantUmlBuilder highlight(State state) {
+        highlightState = state;
+        return this;
+    }
+
+    public List<String> getActiveStateDiagramUrls() {
+        List<String> urls = new ArrayList<String>();
+        for (State state:stateMachine.getDescendantStates()) {
+            String plantUml = new PlantUmlBuilder(stateMachine).highlight(state).build();
+            String url = new PlantUmlUrlEncoder().getUrl(plantUml);
+            urls.add(url);
+        }
+        return urls;
     }
 }

@@ -1,6 +1,12 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
+import de.artcom.hsm.State;
+import de.artcom.hsm.StateMachine;
+import de.artcom.hsm.Sub;
+import uk.co.tekkies.hsm.plantuml.PlantUmlBuilder;
 import uk.co.tekkies.hsm.plantuml.PlantUmlUrlEncoder;
 
 public class PlantUmlUrlEncoderTest {
@@ -14,5 +20,11 @@ public class PlantUmlUrlEncoderTest {
         Assert.assertTrue(url.equals(expected));
     }
 
+    @Test
+    public void canGenerateAll() {
+
+        StateMachine stateMachine = new StateMachine(new State("A"), new Sub("B", new State("B1"), new State("B2")));
+        List<String> activeStateDiagramUrls = new PlantUmlBuilder(stateMachine).getActiveStateDiagramUrls();
+    }
 
 }
