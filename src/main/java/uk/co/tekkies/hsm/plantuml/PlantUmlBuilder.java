@@ -126,18 +126,8 @@ public class PlantUmlBuilder {
     }
 
 
-    private PlantUmlBuilder highlight(State state) {
+    public PlantUmlBuilder highlight(State state) {
         highlightState = state;
         return this;
-    }
-
-    public List<String> getActiveStateDiagramUrls() {
-        List<String> urls = new ArrayList<String>();
-        for (State state:stateMachine.getDescendantStates()) {
-            String plantUml = new PlantUmlBuilder(stateMachine).highlight(state).build();
-            String url = new PlantUmlUrlEncoder().getUrl(plantUml);
-            urls.add(url);
-        }
-        return urls;
     }
 }
