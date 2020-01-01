@@ -2,14 +2,14 @@ package uk.co.tekkies.hsm.plantuml;
 
 import com.google.common.collect.LinkedListMultimap;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import de.artcom.hsm.Action;
 import de.artcom.hsm.Handler;
 import de.artcom.hsm.State;
 import de.artcom.hsm.StateMachine;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class PlantUmlBuilder {
     StringBuilder stringBuilder;
@@ -74,9 +74,21 @@ public class PlantUmlBuilder {
 
     private void declareActions(State state) {
         Action enterAction = state.getEnterAction();
-        if(enterAction != null)
+        Action exitAction = state.getExitAction();
+
+        if(enterAction != null || exitAction != null)
         {
-            appendLine("%s : Enter: %s", safeName(state.getId()), enterAction.getClass().getSimpleName());
+            StringBuilder actions = new StringBuilder(String.format("%s : ", safeName(state.getId())));
+            if(enterAction != null) {
+                actions.append(String.format("Enter: %s", enterAction.getClass().getSimpleName()));
+            }
+            if(exitAction != null) {
+                if(enterAction != null) {
+                    actions.append("\\n");
+                }
+                actions.append(String.format("Exit: %s", exitAction.getClass().getSimpleName()));
+            }
+            appendLine(actions.toString());
         }
     }
 
