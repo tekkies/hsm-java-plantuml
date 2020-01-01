@@ -1,6 +1,8 @@
 package uk.co.tekkies.hsm.plantuml;
 
 import com.google.common.collect.LinkedListMultimap;
+
+import de.artcom.hsm.Action;
 import de.artcom.hsm.Handler;
 import de.artcom.hsm.State;
 import de.artcom.hsm.StateMachine;
@@ -65,8 +67,17 @@ public class PlantUmlBuilder {
                     declareState(substate, indent + "    ");
             }
         }
+        declareActions(state);
         declareTransitions(state);
         appendLine("%s}", indent);
+    }
+
+    private void declareActions(State state) {
+        Action enterAction = state.getEnterAction();
+        if(enterAction != null)
+        {
+            appendLine("%s : Enter: %s", safeName(state.getId()), enterAction.getClass().getSimpleName());
+        }
     }
 
     private String getColor(State state) {
