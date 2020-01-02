@@ -20,11 +20,4 @@ public class PlantUmlUrlEncoderTest {
         Assert.assertTrue(url.equals(expected));
     }
 
-    @Test
-    public void canGenerateAll() {
-
-        StateMachine stateMachine = new StateMachine(new State("A"), new Sub("B", new State("B1"), new State("B2")));
-        List<String> activeStateDiagramUrls = new PlantUmlBuilder(stateMachine).getActiveStateDiagramUrls();
-    }
-
 }
